@@ -1,7 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include<stdlib.h>
-#include<stdio.h>
-#include<string.h>
+#include<string>
 #include <iostream>
 using namespace std;
 int NumOfInPuts = 1, numberOfState = 1,size_of=0;
@@ -42,9 +40,10 @@ void getData() {
 		transTable[g] = new string[NumOfInPuts];
 	}
 	printf("\nenter the INITIAL state: ");
-	cin >> IntialS;
+	cin.ignore();
+	getline(cin,IntialS);
 	printf("enter the FINAL state: ");
-	cin >> FinalS;
+	getline(cin,FinalS);
 
 	printf("\n");
 	if (numberOfState <= 3) {
@@ -54,13 +53,13 @@ void getData() {
 	else {
 		for (int x = 1; x < numberOfState; x++) {
 			printf("enter the %d STATE: ", x);
-			cin >> transTable[x][0];
+			getline(cin,transTable[x][0]);
 		}
 	}
 	printf("\n");
 	for (int col = 1; col < NumOfInPuts; col++) {
 		printf("enter the %d INPUT: ", col);
-		cin >> transTable[0][col];
+		getline(cin,transTable[0][col]);
 	}
 
 
@@ -69,29 +68,12 @@ void nextState() {
 	printf("\n");
 	for (int row = 1; row < numberOfState; row++) {
 		for (int col = 1; col < NumOfInPuts; col++) {
-			cout << "what is the next state of (" << transTable[row][0] << ") if the input is " << transTable[0][col]<<" ? ";
-			cin >> transTable[row][col];
+			cout << "what is the next state of (" << transTable[row][0] << ") if the input is (" << transTable[0][col]<<") ? ";
+			getline(cin,transTable[row][col]);
 		}
 	}
 }
-/*void split(string str, char seperator)
-{
-	int currIndex = 0, i = 0;
-	int startIndex = 0, endIndex = 0;
-	while (i <= str.s)
-	{
-		if (str[i] == seperator || i == len(str))
-		{
-			endIndex = i;
-			string subStr = "";
-			subStr.append(str, startIndex, endIndex - startIndex);
-			strings[currIndex] = subStr;
-			currIndex += 1;
-			startIndex = endIndex + 1;
-		}
-		i++;
-	}
-}*/
+
 string* tokenize(string s, string del = "-")
 {
 	int start = 0;
@@ -120,16 +102,15 @@ string* tokenize(string s, string del = "-")
 	a++;
 	size_of = a;
 	return x;
-	//cout << s.substr(start, end - start);
 }
 void solving() {
 	printf("enter a string to test: ");
-	cin >> Instring;
+	//cin >> Instring;
+	getline(cin, Instring);
 	cout << " your input is: " << Instring<<"\n";
-	//string* input = strtok(Instring. (),"-");
 	string* inputString = NULL;
 	inputString=tokenize(Instring, "-");
-	//cout << x[0]<<" first";
+	
 	int size =size_of;
 	currentState = IntialS;
 	string nextState;
@@ -155,16 +136,16 @@ void solving() {
 				}
 			}
 			if (accepted) {
-				//row = 0;
 				currentState = nextState;
 				break;
 			}
 		}
 	}
+	/*
 	if (accepted && currentState == FinalS)
 		printf("\n\nACCEPTED\n");
 	else
-		printf("\n\nNOT ACCEPTED\n");
+		printf("\n\nNOT ACCEPTED\n");*/
 }
 void main() {
 	getData();
